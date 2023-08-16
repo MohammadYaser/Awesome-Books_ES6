@@ -24,41 +24,39 @@ class Book {
   }
 }
 
-const displayBooks = (container) => {
-    container.innerHTML = '';
-    
-    bookCollection.forEach((book) => {
-        const newBook = createBookElement(book);
-        container.appendChild(newBook);
-    });
+const createRemoveButton = (book, bookElement) => {
+  const removeButton = document.createElement('button');
+  removeButton.textContent = 'Remove';
+  removeButton.classList.add('remove-btn');
+  removeButton.addEventListener('click', () => {
+    Book.removeBook(book);
+    bookElement.remove();
+  });
+
+  return removeButton;
 };
 
 const createBookElement = (book) => {
-    const newBook = document.createElement('li');
-    newBook.classList.add('newBook');
-    newBook.textContent = `${book.title} by ${book.author}`;
-    newBook.classList.add('gray-li');
+  const newBook = document.createElement('li');
+  newBook.classList.add('newBook');
+  newBook.textContent = `${book.title} by ${book.author}`;
+  newBook.classList.add('gray-li');
 
-    const removeButton = createRemoveButton(book, newBook);
-    newBook.appendChild(removeButton);
+  const removeButton = createRemoveButton(book, newBook);
+  newBook.appendChild(removeButton);
 
-    return newBook;
+  return newBook;
 };
 
-const createRemoveButton = (book, bookElement) => {
-    const removeButton = document.createElement('button');
-    removeButton.textContent = 'Remove';
-    removeButton.classList.add('remove-btn');
-    removeButton.addEventListener('click', () => {
-        Book.removeBook(book);
-        bookElement.remove();
-    });
-    
-    return removeButton;
-};
+const displayBooks = (container) => {
+  container.innerHTML = '';
 
+  bookCollection.forEach((book) => {
+    const newBook = createBookElement(book);
+    container.appendChild(newBook);
+  });
+};
 displayBooks(container);
-
 addBtn.addEventListener('click', (event) => {
   const titleInput = document.querySelector('#titleInput');
   const authorInput = document.querySelector('#authorInput');
